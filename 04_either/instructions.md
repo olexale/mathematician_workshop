@@ -68,7 +68,7 @@ static Either<Charge, Exception> combined(
           : Right(Exception('Can not combine charges with different cards'));
     });
   });
-  }
+}
 ```
 
 > 💡 We had the luxury of returning an `Exception`, but if the `combined` function were a third-party dependency we would need to wrap it inside try..catch block.

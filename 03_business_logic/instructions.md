@@ -11,12 +11,12 @@ We already have a nice function that produces a function. Are they pure?
 Here is the function we had:
 ```dart
 GetCoffeeFunction getCoffeeBuilder(PaymentSystem paymentSystem) {
-    final getCoffee = (cc) {
-        final cup = Cup();
-        paymentSystem.charge(cc, cup.price);
-        return cup; 
-    };
-    return getCoffee;
+  final getCoffee = (cc) {
+    final cup = Cup();
+    paymentSystem.charge(cc, cup.price);
+    return cup; 
+  };
+  return getCoffee;
 }
 ```
 
@@ -25,11 +25,11 @@ The `getCoffeeBuilder` in a nutshell is a function that just creates a local fin
 > 💡 Here is a rule of thumb: if after removing any line of code in a function the return value does not change, this function has a side effect.
 
 ```dart
-    final getCoffee = (cc) {
-        final cup = Cup();
-        paymentSystem.charge(cc, cup.price); // this line is "safe" to remove, hence the function is not pure
-        return cup;
-    };
+final getCoffee = (cc) {
+  final cup = Cup();
+  paymentSystem.charge(cc, cup.price); // this line is "safe" to remove, hence the function is not pure
+  return cup;
+};
 ```
 
 From that definition we may get another rule:
@@ -60,39 +60,39 @@ Or you may use one of the more advanced ones:
 To understand better what it is doing, we will implement our own very primitive version of the `Tuple` class:
 ```dart
 class Tuple<T1, T2> {
-    const Tuple(this.first, this.second);
-    
-    final T1 first;
-    final T2 second;
+  const Tuple(this.first, this.second);
+  
+  final T1 first;
+  final T2 second;
 }
 ```
 
 Cool stuff! Now we need an abstraction over the payment operation, we will call it `Charge`:
 ```dart
 class Charge {
-    const Charge(this.cc, this.amount);
+  const Charge(this.cc, this.amount);
 
-    final CreditCard cc;
-    final double amount;
+  final CreditCard cc;
+  final double amount;
 }
 ```
 
 We are ready for the `getCoffee` refactoring now!
 ```dart
 Tuple<Cup, Charge> Function(CreditCard) getCoffeeBuilder() {
-    final getCoffee = (cc) {
-        final cup = Cup();
-        return Tuple(cup, Charge(cc, cup.price)); 
-    };
-    return getCoffee;
+  final getCoffee = (cc) {
+    final cup = Cup();
+    return Tuple(cup, Charge(cc, cup.price)); 
+  };
+  return getCoffee;
 }
 ```
 
 Look, the `PaymentSystem` dependency just disappeared! We may return `getCoffee` to its initial structure:
 ```dart
 Tuple<Cup, Charge> getCoffee(CreditCard cc) {
-    final cup = Cup();
-    return Tuple(cup, Charge(cc, cup.price)); 
+  final cup = Cup();
+  return Tuple(cup, Charge(cc, cup.price)); 
 }
 ```
 
