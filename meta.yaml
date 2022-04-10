@@ -1,0 +1,18 @@
+name: Write code as mathematician
+type: dart
+steps:
+  - name: Easy as 2+2
+    directory: 01_two_plus_two
+    has_solution: true
+  - name: Classes vs functions
+    directory: 02_classes
+    has_solution: true
+  - name: Refactoring business logic
+    directory: 03_business_logic
+    has_solution: true
+  - name: Charge or Exception
+    directory: 04_either
+    has_solution: true
+  - name: Real App
+    directory: 05_app
+    has_solution: true
