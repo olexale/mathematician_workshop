@@ -2,13 +2,11 @@
 
 ## Pure functions 🫧
 
-We know which functions are pure and we know how to refactor classes to functions. To make our `Cafe` implementation much more mathematical we just need to combine these topics!
-
-We already have a nice function that produces a function. Are they pure?
+We discussed which functions are pure and know how to refactor classes to functions. To make the `Cafe` implementation much more mathematical you just need to combine these topics!
 
 > 💡 Writing code as a mathematician means writing a pure core with stateless entities and pure functions, and then, making the code useful by adding a thin layer of side effects on the surface of this core.
 
-Here is the function we had:
+Here is the function from the previous chapter:
 ```dart
 GetCoffeeFunction getCoffeeBuilder(PaymentSystem paymentSystem) {
   final getCoffee = (cc) {
@@ -32,24 +30,24 @@ final getCoffee = (cc) {
 };
 ```
 
-From that definition we may get another rule:
+From that definition you may get another rule:
 > 💡 All functions that return `void` are functions with side effects.
 
 > ？Can a function that returns a `Future` be pure? Think about it for a bit, the answer would be at the bottom of the solution.
 
-We already discussed that impure functions are unpredictable at runtime, but maybe there is even more evil in them? Unfortunately, - yes. They are harder to test. For sure, you don't want a real bank transaction to happen each time you run a test suite. The most experienced of us might say "come on, it's not 60th", and will create a `PaymentService` abstract class (an interface) that will have two implementations: a real one and some sort of stub for tests. Developers are so used to stubs/mocks/fakes, so that we don't see the problem with them. But true mathematicians might argue that these entities are not required, and you know what - maybe they are right.
+Impure functions are unpredictable at runtime, but maybe there is even more evil in them? Unfortunately, - yes. They are harder to test. For sure, you don't want a real bank transaction to happen each time you run a test suite. The most experienced of us might say "come on, haven't you heard about OOP", and will create a `PaymentService` abstract class (an interface) that will have two implementations: a real one and some sort of stub for tests. Developers are so used to stubs/mocks/fakes, so that they don't see the problem with them. But true mathematicians might argue that these entities are not required, and you know what - maybe they are right.
 
-Additionally, we have an issue with reusability. Let's say, a DevOps, a developer, and a mathematician walks into a coffee shop for three cups of coffee. And barista says - "On it! But I will have to prepare them sequentially and in three transactions because our coffee shop has a `getCoffee` implementation that returns only a single cup of coffee." Not ideal. Let's help the cafe and think about how can we create a function that will return N cups. Mathematician wants it to be pure, developer - to avoid code duplication, DevOps - wants to get their coffee at last!
+Additionally, there is an issue with reusability. Let's say, a DevOps, a developer, and a mathematician walks into a coffee shop for three cups of coffee. And barista says - "On it! But I will have to prepare them sequentially and in three transactions because our coffee shop has a `getCoffee` implementation that returns only a single cup of coffee." Not ideal. Let's help the cafe and think about how can you create a function that will return N cups. Mathematician wants it to be pure, developer - to avoid code duplication, DevOps - wants to get their coffee at last!
 
-If we copy-paste `getCoffee` function with a new name `getCoffees` and slightly change its implementation, that would lead to code duplication. If we remove the `getCoffee` at all and pretend that it's fine to always return a list of cups that just sounds wrong (you ordered a single cup, so here is your array of coffees, ma'am).
+If you copy-paste `getCoffee` function with a new name `getCoffees` and slightly change its implementation, that would lead to code duplication. If you remove the `getCoffee` at all and pretend that it's fine to always return a list of cups that just sounds wrong (you ordered a single cup, so here is your array of coffees, ma'am).
 
-We will try to use the `getCoffee` inside the `getCoffees` function, but before that, we need to make some refactoring. Previously we discussed that mathematicians create a pure core. External dependencies (like a payment system) can not be used in the core. So we need to revisit the function implementation.
+You may use the `getCoffee` inside the `getCoffees` function, but before that, some refactoring is needed. Previously we discussed that mathematicians create a pure core. External dependencies (like a payment system) can not be used in the core. So let's revisit the function implementation.
 
 ## Tuple 🎭
 
-We create a core layer that will provide all the required info to a thin impure layer around the core. In our case, `getCoffee` might return a cup AND all the required information for the payment.
+When you are writing code as a mathematician, you create a core layer that provides all the required info to a thin impure layer around the core. In our case, `getCoffee` might return a cup AND all the required information for the payment.
 
-Fortunately, there is a class for that, it is called `Tuple`. Unfortunately, it is not included in the Dart language. So we're going to `pub.dev` for help:
+Fortunately, there is a class for that, it is called `Tuple`. Unfortunately, it is not included in the Dart language. So, in a real development, you're might get some help from the community:
 * [`tuple_dart`](https://pub.dev/packages/tuple_dart)
 * [`tuple`](https://pub.dev/packages/tuple)
 
@@ -57,7 +55,7 @@ Or you may use one of the more advanced ones:
 * [`fpdart`](https://pub.dev/packages/fpdart)
 * [`dartz`](https://pub.dev/packages/dartz)
 
-To understand better what it is doing, we will implement our own very primitive version of the `Tuple` class:
+For simplicity you may use this primitive version of the `Tuple`:
 ```dart
 class Tuple<T1, T2> {
   const Tuple(this.first, this.second);
@@ -67,7 +65,9 @@ class Tuple<T1, T2> {
 }
 ```
 
-Cool stuff! Now we need an abstraction over the payment operation, we will call it `Charge`:
+> 🛠 Task: Copy `Tuple` implementation to the editor (TODO 1).
+
+Cool stuff! What about an abstraction over the payment operation? Here, let's call it `Charge`:
 ```dart
 class Charge {
   const Charge(this.cc, this.amount);
@@ -77,7 +77,9 @@ class Charge {
 }
 ```
 
-We are ready for the `getCoffee` refactoring now!
+> 🛠 Task: Copy `Charge` implementation to the editor (TODO 2).
+
+It's time for the `getCoffee` refactoring now!
 ```dart
 Tuple<Cup, Charge> Function(CreditCard) getCoffeeBuilder() {
   final getCoffee = (cc) {
@@ -88,7 +90,7 @@ Tuple<Cup, Charge> Function(CreditCard) getCoffeeBuilder() {
 }
 ```
 
-Look, the `PaymentSystem` dependency just disappeared! We may return `getCoffee` to its initial structure:
+Look, the `PaymentSystem` dependency just disappeared! You may return `getCoffee` to its initial structure:
 ```dart
 Tuple<Cup, Charge> getCoffee(CreditCard cc) {
   final cup = Cup();
@@ -96,19 +98,23 @@ Tuple<Cup, Charge> getCoffee(CreditCard cc) {
 }
 ```
 
+> 🛠 Task: Refactor `bookRoomBuilder` to return a `Tuple<Room, Charge>`, the implementation will be similar to `getCoffee`.
+
 Splendid! So, how to get three cups of coffee now?
 
-One of the solutions would be to create a list of cups, get their billing data, and combine that data into a single `Charge` object. For that we may add an additional constructor to `Charge`:
+One of the solutions would be to create a list of cups, get their billing data, and combine that data into a single `Charge` object. For that you may add an additional constructor to `Charge`:
 ```dart
-factory Charge.combined(Charge fitst, Charge second) {
-  if (fitst.cc != second.cc) {
+factory Charge.combined(Charge first, Charge second) {
+  if (first.cc != second.cc) {
     throw Exception('Can not combine charges with different cards');
   }
-  return Charge(fitst.cc, fitst.amount + second.amount);
+  return Charge(first.cc, first.amount + second.amount);
 }
 ```
 
-At last we may implement `getCoffees` and make devops, developer, and mathematician happy:
+> 🛠 Task: Add this constructor to the `Charge` class (TODO 4).
+
+At last you may implement `getCoffees` and make devops, developer, and mathematician happy:
 ```dart
 Tuple<List<Cup>, Charge> getCoffees(CreditCard cc, int n) {
   final purchases = List<Tuple<Coffee, Charge>>.generate(n, (_) => getCoffee(cc));
@@ -119,6 +125,8 @@ Tuple<List<Cup>, Charge> getCoffees(CreditCard cc, int n) {
 }
 ```
 
-DevOps enjoys the coffee, the developer is thinking about tests, but the mathematician is still unhappy! Why? We will try to find out in the next chapter.
+> 🛠 Task: Implement a similar function `bookRooms` with return value `Tuple<List<Room>, Charge>`. (TODO 5)
 
-Meanwhile, would you please add the possibility to book many rooms for a `Hotel`? (do not forget to check yourself by reviewing the solution)
+DevOps enjoys the coffee, the developer is thinking about tests, but the mathematician is still unhappy! Why? Let's find out in the next chapter.
+
+> 🛠 Task: Meanwhile, would you book 3 rooms for these folks? (TODO 6) Don't forget to charge them via `PaymentSystem`. (check the implementation by reviewing the solution when you're done)

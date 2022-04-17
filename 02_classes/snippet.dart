@@ -7,6 +7,7 @@ void main(List<String> args) async {
   print('$room booked!');
 }
 
+// TODO: refactor Hotel class to a function
 class Hotel {
   Hotel(this.paymentSystem);
 

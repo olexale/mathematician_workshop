@@ -2,6 +2,7 @@ void main(List<String> args) async {
   final myCard = CreditCard();
   final paymentSystem = PaymentSystem();
 
+  // TODO 6: Book 3 rooms
   final bookRoom = bookRoomBuilder(paymentSystem);
   final room = await bookRoom(myCard);
   print('$room booked!');
@@ -9,6 +10,7 @@ void main(List<String> args) async {
 
 typedef BookRoomFunction = Future<Room> Function(CreditCard);
 
+// TODO 3: Refactor `bookRoomBuilder` to return a Tuple<Room, Charge>
 BookRoomFunction bookRoomBuilder(PaymentSystem paymentSystem) {
   // ignore: prefer_function_declarations_over_variables
   final bookRoom = (cc) async {
@@ -18,6 +20,13 @@ BookRoomFunction bookRoomBuilder(PaymentSystem paymentSystem) {
   };
   return bookRoom;
 }
+
+// TODO 5: Add `bookRooms` function that takes a CreditCard and a number of rooms to be booked
+
+// TODO 1: Add `Tuple` implementation
+
+// TODO 2: Add `Charge` implementation
+// TODO 4: Add `Charge.combined` constructor
 
 // ---------------- This might come from a third-party library ----------------
 class Room {

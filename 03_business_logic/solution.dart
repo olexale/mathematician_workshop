@@ -39,11 +39,11 @@ class Tuple<T1, T2> {
 class Charge {
   const Charge(this.cc, this.amount);
 
-  factory Charge.combined(Charge fitst, Charge second) {
-    if (fitst.cc != second.cc) {
+  factory Charge.combined(Charge first, Charge second) {
+    if (first.cc != second.cc) {
       throw Exception('Can not combine charges with different cards');
     }
-    return Charge(fitst.cc, fitst.amount + second.amount);
+    return Charge(first.cc, first.amount + second.amount);
   }
 
   final CreditCard cc;
