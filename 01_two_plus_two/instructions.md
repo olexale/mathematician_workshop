@@ -10,7 +10,7 @@ Authored by **Oleksandr Leushchenko** ([@olexale](https://twitter.com/olexale)).
 
 ## Falling apples 🍏
 
-Imagine that each time when you add two to any number, an apple falls from the sky right on your head! 2+2? BAM! An apple! 3+2! BOOM! Another apple! Don't even ask what may fall if you add three or four… It would be so hard to live in this world cause for every action there might be another unexpected unpredictable action. The matematicians call such additional actions _side effects_.
+Imagine that each time when you add two to any number, an apple falls from the sky right on your head! 2+2? BAM! An apple! 3+2! BOOM! Another apple! Don't even ask what may fall if you add three or four… It would be so hard to live in this world cause for every action there might be another unexpected unpredictable action. The mathematicians call such additional actions _side effects_.
 
 The world is full of unexpected things, so how good it is that abstract math laws are _always_ the same. While you're making some abstract math calculation (like adding two to a number) nothing might go wrong! This operation is predictable, foreseeable, obvious, and completely useless! It's the world that adds meaning. 
 
@@ -25,7 +25,7 @@ Let's get back to the original function:
 num add2(num x) => x + 2;
 ```
 
-Each time you call it with the same argument, you're getting the same result. This function does not change the environment (i.e. does not modify any static field, non-local variables, etc.). The matematicians call such a function a _pure_ function. What is an impure function then? It's a function that is:
+Each time you call it with the same argument, you're getting the same result. This function does not change the environment (i.e. does not modify any static field, non-local variables, etc.). The mathematicians call such a function a _pure_ function. What is an impure function then? It's a function that is:
 * modifying a non-local variable;
 * setting a field of an object;
 * throwing an exception;
@@ -34,6 +34,6 @@ Each time you call it with the same argument, you're getting the same result. Th
 * drawing on the screen;
 * and so on…
 
-Oh wow! This list is huge and it's far from complete! Is it even possible to write any whole app with just pure functions? Long story short - nope, it's not. But! The trick is to create an app core by using pure functions and then add the real-world layer with impure functions. It's like the example from above: the student learns simple arithmetic operations, these operations are both priceless and useless. They are priceless cause they will allow to solve real-world problems, and yet useless on their own. That's the way the matematicians may write apps - by creating some universal math-like knowledge with pure math-like functions, and then adding the real-world interaction layer that will make them useful for real usage. I hope that this workshop will teach you some tricks.
+Oh wow! This list is huge and it's far from complete! Is it even possible to write any whole app with just pure functions? Long story short - nope, it's not. But! The trick is to create an app core by using pure functions and then add the real-world layer with impure functions. It's like the example from above: the student learns simple arithmetic operations, these operations are both priceless and useless. They are priceless cause they will allow to solve real-world problems, and yet useless on their own. That's the way the mathematicians may write apps - by creating some universal math-like knowledge with pure math-like functions, and then adding the real-world interaction layer that will make them useful for real usage. I hope that this workshop will teach you some tricks.
 
 But before we begin, let's double-check that we are aligned on what is a function with a side-effect. Look at these functions in the editor. Which ones are pure? (don't forget to validate yourself)
