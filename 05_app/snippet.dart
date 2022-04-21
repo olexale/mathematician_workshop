@@ -14,6 +14,36 @@ class WeatherRepository {
   }
 }
 
+// Workshop Takers note: Please bring this class into the snippet code!
+// Otherwise you have to write some code, realize you need the Either class,
+// then navigate to a previous step to copy/paste it, but lose your work :(
+
+// In real life this class is supposed to be imported from any of these packages:
+// * https://pub.dev/packages/either_dart
+// * https://pub.dev/packages/fpdart
+// * https://pub.dev/packages/dartz
+abstract class Either<L, R> {
+  const Either();
+
+  B fold<B>(B Function(L) ifLeft, B Function(R) ifRight);
+}
+
+class Left<L, R> extends Either<L, R> {
+  const Left(this.value);
+  final L value;
+
+  @override
+  B fold<B>(B Function(L) ifLeft, B Function(R) ifRight) => ifLeft(value);
+}
+
+class Right<L, R> extends Either<L, R> {
+  const Right(this.value);
+  final R value;
+
+  @override
+  B fold<B>(B Function(L) ifLeft, B Function(R) ifRight) => ifRight(value);
+}
+
 // ---------------------- DO NOT CHANGE THAT ----------------------
 // Let's pretend that this code is in third-party library and can not be changed
 class UnpredictableRealWorldApi {

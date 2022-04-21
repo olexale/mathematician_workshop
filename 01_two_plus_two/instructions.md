@@ -26,7 +26,8 @@ num add2(num x) => x + 2;
 ```
 
 Each time you call it with the same argument, you're getting the same result. This function does not change the environment (i.e. does not modify any static field, non-local variables, etc.). The matematicians call such a function a _pure_ function. What is an impure function then? It's a function that is:
-* modifying a non-local variable;
+<!-- I was a little surprised add4 is pure yet addK wasn't pure? I would imagine they're both impure since they access global variables? I thought Pure functions only worked with the data that was passed in. I dunno, definitions are hard haha :P -->
+* accessing or modifying global or non-local variables; 
 * setting a field of an object;
 * throwing an exception;
 * interacting with the user (by displaying information or reading input);

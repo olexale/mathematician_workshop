@@ -106,6 +106,11 @@ One of the solutions would be to create a list of cups, get their billing data, 
 ```dart
 factory Charge.combined(Charge first, Charge second) {
   if (first.cc != second.cc) {
+    // UH OH -- AS I LEARNED IN STEP 1, THIS ISN'T PURE!!! :P
+    // Not sure if it matters or is going to be addressed at all going forward, 
+    // just some thoughts as I'm working through this step :)
+    //
+    // Update: It's addressed in the next step. You sly fox.
     throw Exception('Can not combine charges with different cards');
   }
   return Charge(first.cc, first.amount + second.amount);

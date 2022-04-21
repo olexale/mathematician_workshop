@@ -8,7 +8,7 @@ You already know everything you need to know for writing code as a mathematician
 * the difference between pure and impure functions;
 * how to refactor a class to a function;
 * how to deal with dependencies (currying);
-* how to have multiple values in a single variable;
+* how to store multiple values in a single variable;
 
 Let's refactor a _real_ app now! In the editor, you may find a console Dart application, that pretends to be a weather app. While the app is tiny it already has some problems with testability. Your task is to find what's wrong and fix it. Do not forget to open the solution and validate your work afterward.
 

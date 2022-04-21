@@ -63,6 +63,7 @@ static Either<Charge, Exception> combined(
       Either<Charge, Exception> first, 
       Either<Charge, Exception> second,
     ) {
+  // Maybe mention that flatMap will only get the charge? I had to read through the implementation of fold, flatMap and the Left/Right subclasses pretty closely to understand this part.
   return first.flatMap((charge) {
     return second.flatMap((charge2) {
       return (charge.cc == charge2.cc)
@@ -87,6 +88,8 @@ Tuple<List<Cup>, Either<Charge, Exception>> getCoffees(CreditCard cc, int n) {
     purchases.map((p) => p.first).toList(),
     purchases
         .map((p) => p.second)
+        // Might be a good idea to break this line down? Dartpad is a little tough to use compared to a normal IDE, tracking return types through the functions we've combined is just a bit tough by this stage.
+        // At the same time, taking a few minutes to work through the types and errors Dartpad was throwing solidified the concept and return types in my mind... dunno which is better
         .map<Either<Charge, Exception>>(Left.new)
         .reduce(Charge.combined),
   );

@@ -14,12 +14,14 @@ BookRoomFunction bookRoomBuilder(PaymentSystem paymentSystem) {
   // refactor the following code to local function declarations
   // if you want to look at the alternative syntax
   // ignore: prefer_function_declarations_over_variables
-  final bookRoom = (cc) async {
+
+  // Reviews note: Could you forego this whole debate by simply returning the
+  // function? This is kinda what my solution looked like:
+  return (cc) async {
     final room = Room();
     await paymentSystem.charge(cc, room.price);
     return room;
   };
-  return bookRoom;
 }
 
 // ---------------- This might come from a third-party library ----------------
