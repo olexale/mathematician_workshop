@@ -12,13 +12,11 @@ typedef BookRoomFunction = Future<Room> Function(CreditCard);
 
 // TODO 3: Refactor `bookRoomBuilder` to return a Tuple<Room, Charge>
 BookRoomFunction bookRoomBuilder(PaymentSystem paymentSystem) {
-  // ignore: prefer_function_declarations_over_variables
-  final bookRoom = (cc) async {
+  return (cc) async {
     final room = Room();
     await paymentSystem.charge(cc, room.price);
     return room;
   };
-  return bookRoom;
 }
 
 // TODO 5: Add `bookRooms` function that takes a CreditCard and a number of rooms to be booked

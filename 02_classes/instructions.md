@@ -48,12 +48,11 @@ So, you may create a function that expects all required dependencies (like a con
 typedef GetCoffeeFunction = Cup Function(CreditCard);
 
 GetCoffeeFunction getCoffeeBuilder(PaymentSystem paymentSystem) {
-  final getCoffee = (cc) {
+  return (cc) {
     final cup = Cup()
     paymentSystem.charge(cc, cup.price);
     return cup; 
   };
-  return getCoffee;
 }
 ```
 

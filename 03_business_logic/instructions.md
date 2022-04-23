@@ -9,12 +9,11 @@ We discussed which functions are pure and know how to refactor classes to functi
 Here is the function from the previous chapter:
 ```dart
 GetCoffeeFunction getCoffeeBuilder(PaymentSystem paymentSystem) {
-  final getCoffee = (cc) {
+  return (cc) {
     final cup = Cup();
     paymentSystem.charge(cc, cup.price);
     return cup; 
   };
-  return getCoffee;
 }
 ```
 
@@ -99,6 +98,8 @@ Tuple<Cup, Charge> getCoffee(CreditCard cc) {
 ```
 
 > 🛠 Task: Refactor `bookRoomBuilder` to return a `Tuple<Room, Charge>`, the implementation will be similar to `getCoffee`.
+
+> 💡 Wait, if `PaymentSystem` just disappeared from the `getCoffee` - how to test the payment? By testing the entity that will do the payment. Here, for simplicity, it will be the `main` function, which is really tricky to test, but in real life that might be the "track" from [railway-oriented programming](https://fsharpforfunandprofit.com/rop/) that will be easily testable.
 
 Splendid! So, how to get three cups of coffee now?
 

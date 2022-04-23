@@ -63,11 +63,11 @@ static Either<Charge, Exception> combined(
       Either<Charge, Exception> first, 
       Either<Charge, Exception> second,
     ) {
-  return first.flatMap((charge) {
-    return second.flatMap((charge2) {
+  return first.flatMap((charge) { // if first Either carries charge - get it, otherwise - return
+    return second.flatMap((charge2) { // if second Either carries charge - get it, otherwise - return
       return (charge.cc == charge2.cc)
-          ? Left(Charge(charge.cc, charge.amount + charge2.amount))
-          : Right(Exception('Can not combine charges with different cards'));
+          ? Left(Charge(charge.cc, charge.amount + charge2.amount)) // creates Either with new charge
+          : Right(Exception('Can not combine charges with different cards')); // creates Either with error
     });
   });
 }
@@ -86,9 +86,9 @@ Tuple<List<Cup>, Either<Charge, Exception>> getCoffees(CreditCard cc, int n) {
   return Tuple(
     purchases.map((p) => p.first).toList(),
     purchases
-        .map((p) => p.second)
-        .map<Either<Charge, Exception>>(Left.new)
-        .reduce(Charge.combined),
+        .map((p) => p.second) // get charges from purchases
+        .map<Either<Charge, Exception>>(Left.new) // wrap them in Either
+        .reduce(Charge.combined), // reduce a collection of Eithers into a single one item
   );
 }
 ```

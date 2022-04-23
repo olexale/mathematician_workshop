@@ -10,16 +10,11 @@ void main(List<String> args) async {
 typedef BookRoomFunction = Future<Room> Function(CreditCard);
 
 BookRoomFunction bookRoomBuilder(PaymentSystem paymentSystem) {
-  // this syntax is a bit more readable to me, but linter does not agree
-  // refactor the following code to local function declarations
-  // if you want to look at the alternative syntax
-  // ignore: prefer_function_declarations_over_variables
-  final bookRoom = (cc) async {
+  return (cc) async {
     final room = Room();
     await paymentSystem.charge(cc, room.price);
     return room;
   };
-  return bookRoom;
 }
 
 // ---------------- This might come from a third-party library ----------------
